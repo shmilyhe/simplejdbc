@@ -1,5 +1,8 @@
 package com.eshore.jdbc.impl;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.eshore.jdbc.api.IPagination;
 
 /**
@@ -24,11 +27,22 @@ public class OraclePagination implements IPagination {
 	
 	@Override
 	public String fixCountSQL(String sql) {
-		return "select count(1) from (" + sql + ") a";
+		return "select count(1) from (" +removeOrderBy(sql) + ") a";
 	}
 
 	@Override
 	public int extract(int row, int page, int pageSize) {
 		return VALUE;
+	}
+	
+	Pattern p=Pattern.compile(".*(ORDER +BY).*");
+	private String removeOrderBy(String sql) {
+		String sql2=sql.toUpperCase();
+		Matcher m = p.matcher(sql2);
+		if(m.matches()) {
+			String or=m.group(1);
+			 sql =sql.substring(0,sql2.indexOf(or));
+		}
+		return sql;
 	}
 }

@@ -1,5 +1,6 @@
 package com.eshore.jdbc.api;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +44,22 @@ public interface IQuery {
 	 * @return 查询结果
 	 */
 	List list();
+	
+	
+	/**
+	 * 设置返回结果为数组，如果设置
+	 * @return
+	 */
+	IQuery array();
+	
+	/**
+	 * 设置查询的list是按游标读取的list,实际上是resultSet 的封装，
+	 * connection 并没有关闭，请务必手动调用list.clear()方法释放连接资源。
+	 * 这个方法适合目标查询的数据行数很多，需要逐条处理的这样的批处理情景。
+	 * 重要的事情说三遍，记得clear()，记得clear()，记得clear()
+	 * @return Collection<Object>
+	 */
+	Collection<Object> raw();
 	
 	/**
 	 * 获取第一个值

@@ -87,7 +87,7 @@ public class Query implements IQuery {
 			d.clear();
 			return list;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(sql,e);
 		}finally{
 			close();
 		}
@@ -125,12 +125,22 @@ public class Query implements IQuery {
 			close();
 		}
 	}
+	
 	protected Collection excute() throws SQLException{
 		query() ;
-		RsList rlist =new RsList(rs,pagination,statm,clazz,this.page,this.pageSize,ig);
-		rlist.setAlias(alias);
-		return rlist;
+		if(array) {
+			RsColumnList<Object[]> rlist =new RsColumnList<Object[]>(rs,pagination,statm,this.page,this.pageSize);
+			rlist.setQ(this);
+			return rlist;	
+		}else {
+			RsList rlist =new RsList(rs,pagination,statm,clazz,this.page,this.pageSize,ig);
+			rlist.setAlias(alias);
+			rlist.setQ(this);
+			return rlist;
+		}
+		
 	}
+	
 
 	@Override
 	public int rows() {
@@ -155,6 +165,26 @@ public class Query implements IQuery {
 	@Override
 	public IQuery alias(Map amap) {
 		this.alias=amap;
+		return this;
+	}
+
+	
+
+	@Override
+	public Collection<Object> raw() {
+		try {
+			return excute();
+		} catch (SQLException e) {
+			log.error("query error :",sql,e);
+			close();
+			return null;
+		}
+	}
+
+	boolean array=false;
+	@Override
+	public IQuery array() {
+		array=true;
 		return this;
 	}
 

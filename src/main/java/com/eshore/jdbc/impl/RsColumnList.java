@@ -25,40 +25,18 @@ import com.eshore.jdbc.api.IPagination;
  *查询的RestultSet封装成一个list
  * @param <E>
  */
-public class RsList<E> implements List<E> {
+public class RsColumnList<E> implements List<E> {
 	
 	ResultSet rs;
 	IPagination p;
 	PreparedStatement statm;
 	int page;
 	int pageSize;
-	String[] ig;
-	Class<?> clazz;
-	Map alias;
-	
-	public Map getAlias() {
-		return alias;
-	}
 
-	private Map v2k(Map m,boolean upper){
-		if(m==null)return null;
-		Map nmap = new HashMap();
-		for(Object o : m.entrySet()){
-			Entry<String,String> e = (Entry<String, String>) o;
-			String k=e.getValue();
-			String v=e.getKey();
-			if(upper){
-				k=k.toUpperCase();
-				v=v.toUpperCase();
-			}
-			nmap.put(k, v);
-		}
-		return nmap;
-	}
 	
-	public void setAlias(Map alias) {
-		this.alias =v2k(alias,true);
-	}
+
+
+
 
 	/**
 	 * 
@@ -70,24 +48,15 @@ public class RsList<E> implements List<E> {
 	 * @param pageSize 分页大小
 	 * @param ig 不处理的字段
 	 */
-	public RsList(ResultSet rs,IPagination p,PreparedStatement statm,Class<?> clazz,int page,int pageSize,String[] ig){
+	public RsColumnList(ResultSet rs,IPagination p,PreparedStatement statm,int page,int pageSize){
 		this.rs=rs;
 		this.p=p;
 		this.statm=statm;
 		this.page=page;
 		this.pageSize=pageSize;
-		this.clazz=clazz;
-		this.ig=ig;
 	}
 
-	private boolean igore(String key){
-		if(ig==null)return false;
-		for(String s:ig){
-			if(s==null)continue;
-			if(s.equalsIgnoreCase(key))return true;
-		}
-		return false;
-	}
+	
 	
 	@Override
 	public int size() {
@@ -142,7 +111,7 @@ public class RsList<E> implements List<E> {
 			public Object next() {
 				try {
 					row++;
-					return mapRow(rs,clazz);
+					return mapRow(rs);
 				} catch (SQLException e) {
 					e.printStackTrace();
 					return null;
@@ -221,32 +190,16 @@ public class RsList<E> implements List<E> {
 		}
 	}
 	
-	public Object mapRow(ResultSet rs, Class<?>clazz) throws SQLException {
+	public Object mapRow(ResultSet rs) throws SQLException {
 		ResultSetMetaData rsmd = rs.getMetaData();
 		int columnCount = rsmd.getColumnCount();
-		Map<String, Object> mapOfColValues = new HashMap();
+		Object[] values = new Object[columnCount];
 		for (int i = 1; i <= columnCount; i++) {
-			String key = lookupColumnName(rsmd, i);
-			if(igore(key))continue;
-			key=key.toUpperCase();
-			if(alias!=null){
-				String k=(String)alias.get(key);
-				if(k!=null&&k.trim().length()>0){
-					key=k;
-				}
-			}
 			Object obj = getResultSetValue(rs, i);
-			mapOfColValues.put(key, obj);
+			values[i-1]=obj;
+
 		}
-
-
-		if(clazz==null)return mapOfColValues;
-		try {
-			return  Beans.getBean(mapOfColValues, clazz);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		} 
+		return values;
 
 	}
 
@@ -347,7 +300,6 @@ public class RsList<E> implements List<E> {
 	public List<E> subList(int fromIndex, int toIndex) {
 		throw new RuntimeException("method not support!");
 	}
-
 	public Query getQ() {
 		return q;
 	}
@@ -357,5 +309,17 @@ public class RsList<E> implements List<E> {
 	}
 
 	private Query q;
+
+
+
+
+
+
+	@Override
+	protected void finalize() throws Throwable {
+		this.clear();
+		super.finalize();
+	}
 	
+
 }
