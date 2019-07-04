@@ -6,7 +6,7 @@
 	<artifactId>simpleJdbc</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-	<description>UAS</description>
+	<description>simpleJdbc</description>
 	<name>io.github.shmilyhe:simpleJdbc</name>
 	<url>https://github.com/shmilyhe/simpleJdbc</url>
 

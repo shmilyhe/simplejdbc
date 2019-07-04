@@ -29,7 +29,7 @@ public class PBKDF2 {
 	 * @param it 迭代次数
 	 * @param keyLen 密钥长度
 	 * @param hash 散列算法
-	 * @return
+	 * @return 计划结果
 	 */
 	public static String pbkdf2(String pwd,String salt,int it,int keyLen ,Hash hash){
 		HMAC  prf = new HMAC(pwd.getBytes(),hash);

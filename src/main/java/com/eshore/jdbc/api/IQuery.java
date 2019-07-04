@@ -57,7 +57,7 @@ public interface IQuery {
 	 * connection 并没有关闭，请务必手动调用list.clear()方法释放连接资源。
 	 * 这个方法适合目标查询的数据行数很多，需要逐条处理的这样的批处理情景。
 	 * 重要的事情说三遍，记得clear()，记得clear()，记得clear()
-	 * @return Collection<Object>
+	 * @return collection 
 	 */
 	Collection<Object> raw();
 	

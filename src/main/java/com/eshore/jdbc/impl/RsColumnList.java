@@ -43,10 +43,8 @@ public class RsColumnList<E> implements List<E> {
 	 * @param rs RestultSet
 	 * @param p Pagination 分页器
 	 * @param statm PreparedStatement
-	 * @param clazz 转换类，如果为空则转换为Map
 	 * @param page 页码
 	 * @param pageSize 分页大小
-	 * @param ig 不处理的字段
 	 */
 	public RsColumnList(ResultSet rs,IPagination p,PreparedStatement statm,int page,int pageSize){
 		this.rs=rs;

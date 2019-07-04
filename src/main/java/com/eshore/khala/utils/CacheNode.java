@@ -39,7 +39,7 @@ public class CacheNode<K,V> {
 	
 	/**
 	 * 是否过期
-	 * @return
+	 * @return 是否过期
 	 */
 	public boolean isExpire(){
 		if(cacheTime==0)return false;
@@ -133,7 +133,7 @@ public class CacheNode<K,V> {
 	
 	/**
 	 * 设置键值
-	 * @param k
+	 * @param k key
 	 */
 	public void setKey(K k){
 	  key=k;
