@@ -37,6 +37,7 @@ public interface IPojoExeuter {
 	
 	/**
 	 * 设置id 字段
+	 * 在插入操作时，设置自增的id请使用generatedKey方法
 	 * @param id id
 	 * @return IPojoExeuter
 	 */
@@ -60,4 +61,14 @@ public interface IPojoExeuter {
 	 */
 	boolean success();
 	IPojoExeuter alias(Map amap);
+	
+	/**
+	 * 设置是否获取自增ID
+	 * @param id id
+	 * @return IPojoExeuter
+	 */
+	IPojoExeuter generatedKey(String id);
+	
+	
+	
 }

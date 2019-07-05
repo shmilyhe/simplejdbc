@@ -10,6 +10,8 @@ public interface ISQLExecuter {
 	ITransaction begingTransaction()throws SQLException;
 	int execute(String sql,Object... param)throws SQLException;
 	int execute(String sql)throws SQLException;
+	long insertReturnKey(String sql,Object... param)throws SQLException;
+	
 	
 	int tryExecute(String sql,Object... param);
 	int tryExecute(String sql);

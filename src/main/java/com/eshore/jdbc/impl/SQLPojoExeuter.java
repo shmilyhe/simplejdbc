@@ -47,6 +47,7 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 				if(ig(col))continue;
 				Object value=e.getValue();
 				if(col.equalsIgnoreCase(id)&&value==null){
+					if(gnerateId)continue;
 					value=UUID.randomUUID().toString().replaceAll("\\-", "");
 					idValue=value;
 				}
@@ -60,7 +61,11 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 			}
 			sql.append(") values(").append(sqlvs).append(")");
 			if(plist.size()==0)return this;
-			exeuter.execute(sql.toString(), plist.toArray());
+			if(gnerateId) {
+				idValue=exeuter.insertReturnKey(sql.toString(), plist.toArray());
+			}else {
+				exeuter.execute(sql.toString(), plist.toArray());
+			}
 			success=true;
 			return this;
 		} catch (Exception e) {
@@ -166,5 +171,14 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 		if(n!=null&&n.trim().length()>0)return n;
 		return name;
 	}
+	
+	boolean gnerateId=false;
+	@Override
+	public IPojoExeuter generatedKey(String id) {
+		this.id=id;
+		gnerateId=true;
+		return this;
+	}
+	
 	
 }

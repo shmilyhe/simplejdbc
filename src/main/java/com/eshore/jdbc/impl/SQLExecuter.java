@@ -2,8 +2,10 @@ package com.eshore.jdbc.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.sql.Statement;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -68,6 +70,34 @@ public class SQLExecuter implements ISQLExecuter {
 			endExecute(conn);
 		}
 		return rows;
+	}
+	
+	@Override
+	public long insertReturnKey(String sql, Object... param) throws SQLException {
+		Connection conn= begigExecute();
+		long id =-1;
+		try{
+		PreparedStatement statm= conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+		int i=1;
+		if(param!=null&&param.length>0)
+		for(Object o :param){
+			SQLValueUtil.setParameterValue(statm, i, o);
+			i++;
+		}
+		//long bt =System.currentTimeMillis();
+		statm.executeUpdate();
+		ResultSet rst = statm.getGeneratedKeys();
+        if(rst.next()) {
+        	id = rst.getLong(1);
+        }
+		//time=System.currentTimeMillis()-bt;
+		statm.close();
+		}catch(Exception e){
+			throw new SQLException(e);
+		}finally{
+			endExecute(conn);
+		}
+		return id;
 	}
 	
 	private Connection begigExecute() throws SQLException{
