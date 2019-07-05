@@ -31,7 +31,7 @@ public class SQLQuery implements ISQLQuery {
 		try {
 			return new  Query(sql,getDataSource().getConnection(),page);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(sql,e);
 		}
 	}
 
