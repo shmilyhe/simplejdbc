@@ -105,7 +105,7 @@ public class Query implements IQuery {
 			}
 			return rst;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(sql,e);
 		}finally{
 			close();
 		}
