@@ -69,9 +69,9 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 			success=true;
 			return this;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
+			//e.printStackTrace();
 		}
-		return this;
 	}
 
 	@Override
