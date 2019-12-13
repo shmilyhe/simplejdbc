@@ -14,7 +14,7 @@ public interface Log {
 	 * 
 	 * @param a warmning
 	 */
-	void warm(Object ...a);
+	void warn(Object ...a);
 	/**
 	 * 
 	 * @param a error

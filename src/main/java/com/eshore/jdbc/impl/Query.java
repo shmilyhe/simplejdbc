@@ -54,9 +54,9 @@ public class Query implements IQuery {
 	} 
 	
 	public void close(){
-		if(rs!=null)try{rs.close();rs=null;}catch(Exception e){log.warm(e);}
-		if( statm!=null)try{ statm.close();statm=null;}catch(Exception e){log.warm(e);}
-		if(conn!=null)try{conn.close();conn=null;}catch(Exception e){log.warm(e);}
+		if(rs!=null)try{rs.close();rs=null;}catch(Exception e){log.warn(e);}
+		if( statm!=null)try{ statm.close();statm=null;}catch(Exception e){log.warn(e);}
+		if(conn!=null)try{conn.close();conn=null;}catch(Exception e){log.warn(e);}
 	}
 	@Override
 	public IQuery page(int page, int pageSize) {

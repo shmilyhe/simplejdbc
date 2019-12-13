@@ -88,7 +88,7 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 				if(col==null)continue;
 				if(ig(col))continue;
 				Object value=e.getValue();
-				if(col.equalsIgnoreCase(id)){
+				if(col.equalsIgnoreCase(id)||id.equalsIgnoreCase(getColumnName(col))){
 					if(value==null)return false;
 					idValue=value;
 					continue;
@@ -178,6 +178,46 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 		this.id=id;
 		gnerateId=true;
 		return this;
+	}
+	@Override
+	public boolean update(String where, Object... param) {
+		StringBuilder sql = new StringBuilder();
+		ArrayList plist = new ArrayList();
+		try {
+			Map dbmap =Beans.toDBMap(pojo);
+			sql.append("update  ").append(table).append(" set ");
+			Set<Map.Entry<String, Object>> es = dbmap.entrySet();
+			boolean isFirst=true;
+			if(es!=null)for(Map.Entry<String, Object> e:es){
+				String col=e.getKey();
+				if(col==null)continue;
+				if(ig(col))continue;
+				Object value=e.getValue();
+				if(id!=null && (col.equalsIgnoreCase(id)||id.equalsIgnoreCase(getColumnName(col)))){
+					if(value==null)return false;
+					idValue=value;
+					continue;
+				}
+				if(value==null&&!useNullValue)continue;
+				
+				if(isFirst){isFirst=false;}else{sql.append(',');}
+				plist.add(value);
+				col=getColumnName(col);
+				sql.append(col).append("=? ");
+			}
+			sql.append(" where ");//.append(id).append("=?");
+			sql.append(where);
+			if(param!=null&&param.length>0) {
+				for(Object o:param) {
+					plist.add(o);
+				}
+			}
+			exeuter.execute(sql.toString(), plist.toArray());
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	

@@ -21,6 +21,12 @@ public interface IPojoExeuter {
 	boolean update();
 	
 	/**
+	 * update
+	 * @return IPojoExeuter
+	 */
+	boolean update(String sql,Object ...param);
+	
+	/**
 	 * 设置表名
 	 * set table name
 	 * @param name table name 表名

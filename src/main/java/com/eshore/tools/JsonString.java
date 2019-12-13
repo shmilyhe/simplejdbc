@@ -94,7 +94,7 @@ public class JsonString {
 				value=m.invoke(o, null);
 			} catch (Exception e) {
 				e.printStackTrace();
-				log.warm(" fail to get value:",o.getClass(),m.getName(), e);
+				log.warn(" fail to get value:",o.getClass(),m.getName(), e);
 			} 
 			if(value==null)continue;
 			name=firstLower(name.substring(3));

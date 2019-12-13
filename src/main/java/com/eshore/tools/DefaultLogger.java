@@ -30,7 +30,7 @@ public class DefaultLogger implements Log {
 	}
 
 	@Override
-	public void warm(Object... a) {
+	public void warn(Object... a) {
 		// TODO Auto-generated method stub
 		System.out.print(sdf.format(new Date()));
 		System.out.print("\t");

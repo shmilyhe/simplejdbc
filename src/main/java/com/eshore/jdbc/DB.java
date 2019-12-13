@@ -137,6 +137,13 @@ public class DB {
 				.update();
 	}
 	
+	public boolean update(Object pojo,String table,String where,Object ...params) {
+		Map alias=Alias.getAlias(pojo.getClass());
+		return exec().pojo(pojo).table(table)
+				.alias(alias)
+				.update(where,params);
+	}
+	
 	public Object findOne(String sql,Class<?> clazz,Object ...param){
 		Map  alias=Alias.getAlias(clazz);
 		return query(sql)

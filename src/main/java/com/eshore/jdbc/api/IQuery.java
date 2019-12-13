@@ -59,7 +59,7 @@ public interface IQuery {
 	 * 重要的事情说三遍，记得clear()，记得clear()，记得clear()
 	 * @return collection 
 	 */
-	Collection<Object> raw();
+	Collection raw();
 	
 	/**
 	 * 获取第一个值
