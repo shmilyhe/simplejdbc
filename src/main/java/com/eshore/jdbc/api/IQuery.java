@@ -1,6 +1,7 @@
 package com.eshore.jdbc.api;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +73,28 @@ public interface IQuery {
 	 * @return 整数值
 	 */
 	int asInt();
+	
+	/**
+	 * 获取第一行第一列值的Double值
+	 * @return Double值
+	 * 
+	 */
+	Double asDouble();
+	
+	/**
+	 * 获取第一行第一列值的Date值
+	 * @return Date值
+	 * 
+	 */
+	Date asDate();
+	
+	/**
+	 * 获取第一行第一列值的Date值
+	 * @return String值
+	 * 
+	 */
+	String asString();
+	
 	/**
 	 * 获取总行数
 	 * @return 总行数
@@ -85,5 +108,6 @@ public interface IQuery {
 	int pages();
 	
 	IQuery alias(Map amap);
+	IQuery alias(Class<?> clazz);
 
 }

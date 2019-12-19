@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.eshore.tools.Alias;
 import com.eshore.tools.Log;
 import com.eshore.tools.Logger;
 import com.eshore.jdbc.SQLValueUtil;
@@ -185,6 +187,57 @@ public class Query implements IQuery {
 	@Override
 	public IQuery array() {
 		array=true;
+		return this;
+	}
+
+	@Override
+	public Double asDouble() {
+		try {
+			query();
+			if(rs.next()){
+				return rs.getDouble(1);
+			}
+			return null;
+		} catch (SQLException e) {
+			 throw new RuntimeException(e);
+		}finally{
+			close();
+		}
+	}
+
+	@Override
+	public Date asDate() {
+		try {
+			query();
+			if(rs.next()){
+				return rs.getDate(1);
+			}
+			return null;
+		} catch (SQLException e) {
+			 throw new RuntimeException(e);
+		}finally{
+			close();
+		}
+	}
+
+	@Override
+	public String asString() {
+		try {
+			query();
+			if(rs.next()){
+				return rs.getString(1);
+			}
+			return null;
+		} catch (SQLException e) {
+			 throw new RuntimeException(e);
+		}finally{
+			close();
+		}
+	}
+
+	@Override
+	public IQuery alias(Class<?> clazz) {
+		if(clazz!=null)alias(Alias.getAlias(clazz));
 		return this;
 	}
 
