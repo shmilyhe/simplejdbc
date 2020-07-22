@@ -15,7 +15,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.eshore.tools.Beans;
+import com.eshore.tools.JBeans;
 import com.eshore.jdbc.api.IPagination;
 
 /**

@@ -14,7 +14,8 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-import com.eshore.tools.Beans;
+import com.eshore.tools.JBeans;
+
 
 public class BeanRowMapper {
 	private Class<?>clazz;
@@ -53,7 +54,7 @@ public class BeanRowMapper {
 
 		try {
 
-			return Beans.getBean(mapOfColValues, clazz);
+			return JBeans.getBean(mapOfColValues, clazz);
 
 		} catch (Exception e) {
 

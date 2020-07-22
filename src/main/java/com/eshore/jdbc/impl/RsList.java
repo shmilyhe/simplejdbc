@@ -15,7 +15,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.eshore.tools.Beans;
+import com.eshore.tools.JBeans;
 import com.eshore.jdbc.api.IPagination;
 
 /**
@@ -242,7 +242,7 @@ public class RsList<E> implements List<E> {
 
 		if(clazz==null)return mapOfColValues;
 		try {
-			return  Beans.getBean(mapOfColValues, clazz);
+			return  JBeans.getBean(mapOfColValues, clazz);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.Map.Entry;
 
-import com.eshore.tools.Beans;
 import com.eshore.jdbc.api.IPojoExeuter;
+import com.eshore.tools.JBeans;
 
 public class SQLPojoExeuter implements  IPojoExeuter{
 	private Object pojo;
@@ -37,7 +37,7 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 		StringBuilder sqlvs = new StringBuilder();
 		ArrayList plist = new ArrayList();
 		try {
-			Map dbmap =Beans.toDBMap(pojo);
+			Map dbmap =JBeans.toDBMap(pojo);
 			sql.append("insert into ").append(table).append("(");
 			Set<Map.Entry<String, Object>> es = dbmap.entrySet();
 			boolean isFirst=true;
@@ -79,7 +79,7 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 		StringBuilder sql = new StringBuilder();
 		ArrayList plist = new ArrayList();
 		try {
-			Map dbmap =Beans.toDBMap(pojo);
+			Map dbmap =JBeans.toDBMap(pojo);
 			sql.append("update  ").append(table).append(" set ");
 			Set<Map.Entry<String, Object>> es = dbmap.entrySet();
 			boolean isFirst=true;
@@ -184,7 +184,7 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 		StringBuilder sql = new StringBuilder();
 		ArrayList plist = new ArrayList();
 		try {
-			Map dbmap =Beans.toDBMap(pojo);
+			Map dbmap =JBeans.toDBMap(pojo);
 			sql.append("update  ").append(table).append(" set ");
 			Set<Map.Entry<String, Object>> es = dbmap.entrySet();
 			boolean isFirst=true;

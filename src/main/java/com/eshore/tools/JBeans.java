@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 //import javax.persistence.Enumerated;
 
-public class Beans {
+public class JBeans {
 
 	//final Logger logger = LoggerFactory.getLogger(Beans.class);
 
