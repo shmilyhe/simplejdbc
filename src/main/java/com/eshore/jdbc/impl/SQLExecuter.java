@@ -206,6 +206,7 @@ public class SQLExecuter implements ISQLExecuter {
 		try{
 			return execute(sql,param);
 		}catch(Exception e){
+			e.printStackTrace();
 			log.warn("tryExecute",sql,e,param);
 		}
 		return 0;

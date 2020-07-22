@@ -351,6 +351,8 @@ class field {
 			dest = this.parseDate(o);
 		} else if (boolean.class.equals(type) || Boolean.class.equals(type)) {
 			dest = this.parseBoolean(o);
+		} else if (long.class.equals(type) || Long.class.equals(type)) {
+			dest = this.parseLong(o);
 		}else if(BigDecimal.class.equals(type)){
 			return new BigDecimal(o.toString());
 
