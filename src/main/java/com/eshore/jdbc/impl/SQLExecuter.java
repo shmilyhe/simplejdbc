@@ -14,6 +14,7 @@ import com.eshore.tools.Log;
 import com.eshore.tools.Logger;
 import com.eshore.jdbc.SQLValueUtil;
 import com.eshore.jdbc.SingleConnectionDataSource;
+import com.eshore.jdbc.api.Batch;
 import com.eshore.jdbc.api.IPojoExeuter;
 import com.eshore.jdbc.api.IQuery;
 import com.eshore.jdbc.api.ISQLExecuter;
@@ -220,6 +221,15 @@ public class SQLExecuter implements ISQLExecuter {
 	@Override
 	public IPojoExeuter pojo(Object o) {
 		return new SQLPojoExeuter(this,o);
+	}
+
+	@Override
+	public Batch createBatch(String sql) {
+		try {
+			return new Batch(sql,ds.getConnection());
+		} catch (SQLException e) {
+			throw new RuntimeException(sql,e);
+		}
 	}
 	
 	

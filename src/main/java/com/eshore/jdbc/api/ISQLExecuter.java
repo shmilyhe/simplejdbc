@@ -17,4 +17,6 @@ public interface ISQLExecuter {
 	int tryExecute(String sql);
 	IPojoExeuter pojo(Object o);
 	
+	Batch createBatch(String sql);
+	
 }
