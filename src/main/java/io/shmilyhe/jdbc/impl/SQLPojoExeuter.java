@@ -50,6 +50,9 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 					if(gnerateId)continue;
 					value=UUID.randomUUID().toString().replaceAll("\\-", "");
 					idValue=value;
+					Map<String,Object> vas = new HashMap();
+					vas.put(id.toUpperCase(), value);
+					JBeans.updateBean(vas, pojo);
 				}
 				if(value==null&&!useNullValue)continue;
 				if(isFirst){isFirst=false;}else{sql.append(',');sqlvs.append(',');}
@@ -63,6 +66,11 @@ public class SQLPojoExeuter implements  IPojoExeuter{
 			if(plist.size()==0)return this;
 			if(gnerateId) {
 				idValue=exeuter.insertReturnKey(sql.toString(), plist.toArray());
+				if(id!=null) {
+					Map<String,Object> vas = new HashMap();
+					vas.put(id.toUpperCase(), idValue);
+					JBeans.updateBean(vas, pojo);
+				}
 			}else {
 				exeuter.execute(sql.toString(), plist.toArray());
 			}

@@ -55,6 +55,50 @@ public class JBeans {
      }
 	
  
+     @SuppressWarnings("unchecked")
+ 	public static <T> Object updateBean(Map values, T dest) {
+ 		//Object dest = clazz.newInstance();
+    	 if(dest==null)return null;
+    	 try {
+	    	Class<T> clazz =(Class<T>) dest.getClass();
+	 		Map convers =getCoverMap(clazz);// (Map) conver.get(clazz);
+	 		Method[] method = clazz.getMethods();
+	 		/**
+	 		 * 给实例填充
+	 		 */
+	
+	 		for (int i = 0; i < method.length; i++) {
+	 			Method meth = method[i];
+	
+	 			/**
+	 			 * 当不是set的
+	 			 */
+	 			if (!meth.getName().startsWith("set"))
+	 				continue;
+	
+	 			/**
+	 			 * 当没有参数或参数个数大于1个时跳过
+	 			 */
+	
+	 			// Type types[]= meth.getGenericParameterTypes();
+	 			// if(types==null||types.length>1)continue;
+	
+	 			String name = meth.getName().substring(3).toUpperCase();
+	 			field f = (field) convers.get(name);
+	 			if (f == null)
+	 				continue;
+	 			if (f.dbName != null)
+	 				name = f.dbName;
+	 			Object param = f.conver(values.get(name));
+	 			if (param == null)
+	 				continue;
+	 			meth.invoke(dest, param);
+	 		}
+	 		return dest;
+    	}catch(Exception e) {
+    		return null;
+    	}
+ 	}
 
 
 
